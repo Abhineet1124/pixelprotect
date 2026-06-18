@@ -7,9 +7,10 @@ import {
   Activity,
   Bot,
   UserCog,
-  Settings
+  Settings,
+  Bell,
+  FileText
 } from "lucide-react";
-
 
 export default function Sidebar() {
   return (
@@ -20,125 +21,113 @@ export default function Sidebar() {
         background: "#020617",
         color: "white",
         padding: "20px",
-        borderRight:"1px solid #1e293b"
+        borderRight: "1px solid #1e293b"
       }}
     >
-
       <h2
-      style={{
-        color:"#38bdf8",
-        marginBottom:"30px"
-      }}
+        style={{
+          color: "#38bdf8",
+          marginBottom: "30px"
+        }}
       >
         🛡 PixelProtect
       </h2>
 
-
       <nav
         style={{
-          display:"flex",
-          flexDirection:"column",
-          gap:"12px"
+          display: "flex",
+          flexDirection: "column",
+          gap: "12px"
         }}
       >
-
-
-        <Menu 
-        icon={<LayoutDashboard size={20}/>}
-        text="Dashboard"
-        link="/dashboard"
+        <Menu
+          icon={<LayoutDashboard size={20} />}
+          text="Dashboard"
+          link="/dashboard"
         />
-
 
         <Menu
-        icon={<FolderLock size={20}/>}
-        text="Secure Files"
-        link="/files"
+          icon={<FolderLock size={20} />}
+          text="Secure Files"
+          link="/files"
         />
-
 
         <Menu
-        icon={<ShieldAlert size={20}/>}
-        text="Threat Center"
-        link="/threats"
+          icon={<ShieldAlert size={20} />}
+          text="Threat Center"
+          link="/threats"
         />
-
 
         <Menu
-        icon={<Activity size={20}/>}
-        text="Activity Monitor"
-        link="/activity"
+          icon={<Activity size={20} />}
+          text="Activity Monitor"
+          link="/activity"
         />
-
 
         <Menu
-        icon={<BarChart3 size={20}/>}
-        text="Analytics"
-        link="/analytics"
+          icon={<BarChart3 size={20} />}
+          text="Analytics"
+          link="/analytics"
         />
-
 
         <Menu
-        icon={<Bot size={20}/>}
-        text="AI Assistant"
-        link="/assistant"
+          icon={<FileText size={20} />}
+          text="Reports"
+          link="/reports"
         />
-
 
         <Menu
-        icon={<UserCog size={20}/>}
-        text="Admin Panel"
-        link="/admin"
+          icon={<Bot size={20} />}
+          text="AI Assistant"
+          link="/assistant"
         />
-
 
         <Menu
-        icon={<Settings size={20}/>}
-        text="Settings"
-        link="/settings"
+          icon={<UserCog size={20} />}
+          text="Admin Panel"
+          link="/admin"
         />
 
+        <Menu
+          icon={<Bell size={20} />}
+          text="Notifications"
+          link="/notifications"
+        />
+
+        <Menu
+          icon={<Settings size={20} />}
+          text="Settings"
+          link="/settings"
+        />
       </nav>
-
-
     </div>
   );
 }
-
-
 
 function Menu({
   icon,
   text,
   link
-}:{
-  icon:any;
-  text:string;
-  link:string;
-}){
-
-return (
-
-<Link
-to={link}
-style={{
-display:"flex",
-alignItems:"center",
-gap:"12px",
-padding:"12px",
-borderRadius:"10px",
-color:"#cbd5e1",
-textDecoration:"none"
-}}
-
->
-
-{icon}
-
-{text}
-
-</Link>
-
-)
-
+}: {
+  icon: any;
+  text: string;
+  link: string;
+}) {
+  return (
+    <Link
+      to={link}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        padding: "12px",
+        borderRadius: "10px",
+        color: "#cbd5e1",
+        textDecoration: "none"
+      }}
+    >
+      {icon}
+      {text}
+    </Link>
+  );
 }

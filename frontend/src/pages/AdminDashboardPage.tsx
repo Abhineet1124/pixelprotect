@@ -1,48 +1,167 @@
-import Sidebar from "../components/Sidebar";
+import {useEffect,useState} from "react";
 
-export default function AdminDashboardPage() {
-  return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-        background: "#020617",
-        color: "white",
-      }}
-    >
-      <Sidebar />
 
-      <div style={{ flex: 1, padding: "30px" }}>
-        <h1>Admin Dashboard</h1>
+export default function AdminDashboardPage(){
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: "20px",
-          }}
-        >
-          <div style={{ background:"#1e293b",padding:"20px",borderRadius:"12px" }}>
-            <h2>245</h2>
-            <p>Users</p>
-          </div>
 
-          <div style={{ background:"#1e293b",padding:"20px",borderRadius:"12px" }}>
-            <h2>1284</h2>
-            <p>Threats</p>
-          </div>
+const [users,setUsers]=useState<any[]>([]);
+const [threats,setThreats]=useState<any[]>([]);
+const [logs,setLogs]=useState<any[]>([]);
 
-          <div style={{ background:"#1e293b",padding:"20px",borderRadius:"12px" }}>
-            <h2>96%</h2>
-            <p>Security Health</p>
-          </div>
 
-          <div style={{ background:"#1e293b",padding:"20px",borderRadius:"12px" }}>
-            <h2>48 GB</h2>
-            <p>Storage Usage</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+
+useEffect(()=>{
+
+
+fetch("http://localhost:5000/api/admin/users")
+.then(r=>r.json())
+.then(setUsers);
+
+
+fetch("http://localhost:5000/api/admin/threats")
+.then(r=>r.json())
+.then(setThreats);
+
+
+fetch("http://localhost:5000/api/admin/activity")
+.then(r=>r.json())
+.then(setLogs);
+
+
+},[]);
+
+
+
+return (
+
+<div
+
+style={{
+background:"#020617",
+color:"white",
+minHeight:"100vh",
+padding:"30px"
+}}
+
+>
+
+
+<h1>
+👑 Admin Security Console
+</h1>
+
+
+
+<div
+
+style={{
+display:"grid",
+gridTemplateColumns:"repeat(3,1fr)",
+gap:"20px"
+}}
+
+>
+
+
+<div className="card">
+
+<h2>
+Users
+</h2>
+
+<h1>
+{users.length}
+</h1>
+
+</div>
+
+
+
+<div className="card">
+
+<h2>
+Threats
+</h2>
+
+<h1>
+{threats.length}
+</h1>
+
+</div>
+
+
+
+<div className="card">
+
+<h2>
+Activities
+</h2>
+
+<h1>
+{logs.length}
+</h1>
+
+</div>
+
+
+</div>
+
+
+
+<h2>
+Users
+</h2>
+
+
+{
+users.map(u=>(
+
+<div
+key={u.id}
+className="card"
+>
+
+{u.email}
+
+<br/>
+
+Risk:
+{u.riskScore}
+
+</div>
+
+))
+}
+
+
+
+<h2>
+Recent Threats
+</h2>
+
+
+{
+threats.map(t=>(
+
+<div
+key={t.id}
+className="card"
+>
+
+{t.type}
+
+<br/>
+
+{t.severity}
+
+</div>
+
+))
+}
+
+
+</div>
+
+)
+
 }

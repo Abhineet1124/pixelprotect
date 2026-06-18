@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ReportsPage from "../pages/ReportsPage";
 import AIAssistantPage from "../pages/AIAssistantPage";
 import AdminDashboardPage from "../pages/AdminDashboardPage";
 import AnalyticsPage from "../pages/AnalyticsPage";
@@ -11,7 +11,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import DashboardPage from "../pages/DashboardPage";
-
+import NotificationsPage from "../pages/NotificationsPage";
 
 export default function AppRoutes() {
 
@@ -55,7 +55,24 @@ element={
 }
 />
 
+<Route
+  path="/reports"
+  element={
+    <ProtectedRoute>
+      <ReportsPage />
+    </ProtectedRoute>
+  }
+/>
 
+
+<Route
+  path="/notifications"
+  element={
+    <ProtectedRoute>
+      <NotificationsPage />
+    </ProtectedRoute>
+  }
+/>
 
 <Route
 path="/files"

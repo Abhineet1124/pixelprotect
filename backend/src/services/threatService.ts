@@ -1,46 +1,55 @@
 import { PrismaClient } from "@prisma/client";
 
-
 const prisma = new PrismaClient();
 
+export async function getThreats() {
 
+  const threats =
+    await prisma.threatLog.findMany({
 
-export async function getThreats(){
+      orderBy: {
+        createdAt: "desc"
+      }
 
-const threats =
-await prisma.threatLog.findMany({
+    });
 
-orderBy:{
-createdAt:"desc"
+  return threats;
 }
-
-});
-
-
-return threats;
-
-}
-
-
 
 export async function createThreat(
-type:string,
-severity:string,
-description:string,
-riskScore:number
-){
+  type: string,
+  severity: string,
+  description: string,
+  riskScore: number
+) {
 
-return await prisma.threatLog.create({
+  const threat =
+    await prisma.threatLog.create({
 
-data:{
+      data: {
 
-type,
-severity,
-description,
-riskScore
+        type,
+        severity,
+        description,
+        riskScore
 
-}
+      }
 
-});
+    });
 
+  await prisma.notification.create({
+
+    data: {
+
+      title: "Threat Detected",
+
+      message: description,
+
+      type: "THREAT"
+
+    }
+
+  });
+
+  return threat;
 }

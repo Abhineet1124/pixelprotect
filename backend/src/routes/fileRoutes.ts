@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
-
+import prisma from "../lib/prisma";
 import {
 encryptFile
 } from "../services/encryptionService";
@@ -50,7 +50,13 @@ req.file.path,
 encryptedPath
 );
 
-
+await prisma.file.create({
+  data: {
+    filename: req.file.originalname,
+    encryptedName: encryptedPath,
+    size: req.file.size
+  }
+});
 
 await logActivity(
 "FILE_UPLOAD",

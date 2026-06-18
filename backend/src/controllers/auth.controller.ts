@@ -1,4 +1,8 @@
 import { Request, Response } from "express";
+import {
+detectThreat
+}
+from "../services/threatDetectionService";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma";
@@ -74,10 +78,24 @@ export const login = async (
       );
 
     if (!validPassword) {
-      return res.status(401).json({
-        message: "Invalid credentials",
-      });
-    }
+
+
+  await detectThreat(
+
+    "FAILED_LOGIN",
+
+    `Failed login attempt for ${email}`
+
+  );
+
+
+  return res.status(401).json({
+
+    message: "Invalid credentials",
+
+  });
+
+}
 
     const token = jwt.sign(
       {

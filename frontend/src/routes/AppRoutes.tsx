@@ -1,18 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import LandingPage from "../pages/LandingPage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-
-import DashboardPage from "../pages/DashboardPage";
-import FileManagerPage from "../pages/FileManagerPage";
-import ThreatCenterPage from "../pages/ThreatCenterPage";
-import ActivityPage from "../pages/ActivityPage";
-import AnalyticsPage from "../pages/AnalyticsPage";
 import AIAssistantPage from "../pages/AIAssistantPage";
 import AdminDashboardPage from "../pages/AdminDashboardPage";
-
+import AnalyticsPage from "../pages/AnalyticsPage";
+import ThreatCenterPage from "../pages/ThreatCenterPage";
+import LandingPage from "../pages/LandingPage";
+import FileManagerPage from "../pages/FileManagerPage";
+import ActivityPage from "../pages/ActivityPage";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import DashboardPage from "../pages/DashboardPage";
 
 
 export default function AppRoutes() {

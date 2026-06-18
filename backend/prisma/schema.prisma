@@ -28,7 +28,21 @@ model User {
 
 }
 
+model ActivityLog {
 
+  id String @id @default(uuid())
+
+  action String
+
+  details String?
+
+  ipAddress String?
+
+  device String?
+
+  createdAt DateTime @default(now())
+
+}
 
 model File {
 
@@ -39,6 +53,23 @@ model File {
   encryptedName String
 
   size Int
+
+  createdAt DateTime @default(now())
+
+}
+model ThreatLog {
+
+  id String @id @default(uuid())
+
+  type String
+
+  severity String
+
+  description String
+
+  riskScore Int
+
+  status String @default("ACTIVE")
 
   createdAt DateTime @default(now())
 

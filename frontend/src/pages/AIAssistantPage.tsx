@@ -1,55 +1,156 @@
-import Sidebar from "../components/Sidebar";
+import {
+useState
+}
+from "react";
 
-export default function AIAssistantPage() {
-  return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-        background: "#020617",
-        color: "white",
-      }}
-    >
-      <Sidebar />
 
-      <div style={{ flex: 1, padding: "30px" }}>
-        <h1>AI Security Assistant</h1>
+export default function AIAssistantPage(){
 
-        <div
-          style={{
-            background: "#1e293b",
-            padding: "20px",
-            borderRadius: "12px",
-            marginTop: "20px",
-          }}
-        >
-          <p>
-            Why is my risk score high?
-          </p>
 
-          <hr />
+const [message,setMessage]=useState("");
 
-          <p>
-            Your account shows:
-          </p>
+const [reply,setReply]=useState("");
 
-          <ul>
-            <li>8 failed login attempts</li>
-            <li>Login from new device</li>
-            <li>42 downloads in 10 minutes</li>
-          </ul>
 
-          <p>
-            Recommended:
-          </p>
 
-          <ul>
-            <li>Enable MFA</li>
-            <li>Change password</li>
-            <li>Review recent activity</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
+async function askAI(){
+
+
+const res =
+await fetch(
+"http://localhost:5000/api/ai",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+message
+})
+
+}
+
+);
+
+
+const data =
+await res.json();
+
+
+setReply(
+data.reply
+);
+
+
+}
+
+
+
+return (
+
+<div
+
+style={{
+
+padding:"30px",
+
+background:"#020617",
+
+minHeight:"100vh",
+
+color:"white"
+
+}}
+
+>
+
+
+<h1>
+🤖 AI Security Assistant
+</h1>
+
+
+
+<textarea
+
+placeholder="Ask security question..."
+
+value={message}
+
+onChange={
+e=>setMessage(e.target.value)
+}
+
+style={{
+
+width:"100%",
+
+height:"120px",
+
+marginTop:"30px"
+
+}}
+
+/>
+
+
+
+<button
+
+onClick={askAI}
+
+style={{
+
+marginTop:"20px",
+
+padding:"12px 30px"
+
+}}
+
+>
+
+Analyze
+
+</button>
+
+
+
+<div
+
+style={{
+
+marginTop:"30px",
+
+background:"#1e293b",
+
+padding:"20px",
+
+borderRadius:"15px"
+
+}}
+
+>
+
+
+<h3>
+AI Response
+</h3>
+
+
+<p>
+{reply}
+</p>
+
+
+</div>
+
+
+
+</div>
+
+)
+
 }

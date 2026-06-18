@@ -4,16 +4,17 @@ import path from "path";
 
 import {
 encryptFile
-}
-from "../services/encryptionService";
+} from "../services/encryptionService";
+
+import {
+logActivity
+} from "../services/activityService";
 
 
 const router = express.Router();
 
 
-
-const upload =
-multer({
+const upload = multer({
 dest:"uploads/temp"
 });
 
@@ -23,7 +24,7 @@ router.post(
 "/upload",
 upload.single("file"),
 
-(req:any,res)=>{
+async(req,res)=>{
 
 
 if(!req.file){
@@ -51,10 +52,16 @@ encryptedPath
 
 
 
+await logActivity(
+"FILE_UPLOAD",
+`Uploaded ${req.file.originalname}`
+);
+
+
+
 res.json({
 
-message:
-"File encrypted and stored 🔐",
+message:"File encrypted and stored 🔐",
 
 file:{
 original:req.file.originalname,
@@ -65,7 +72,6 @@ encrypted:encryptedPath
 
 
 });
-
 
 
 export default router;

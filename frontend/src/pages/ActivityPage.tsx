@@ -1,37 +1,45 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
+import {
+  ShieldCheck,
+  UploadCloud,
+  Clock
+} from "lucide-react";
 
 
 export default function ActivityPage() {
 
-  const [logs, setLogs] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [logs,setLogs] = useState<any[]>([]);
+  const [loading,setLoading] = useState(true);
 
 
-  useEffect(() => {
+  useEffect(()=>{
 
     fetchActivities();
 
-  }, []);
+  },[]);
 
 
 
-  async function fetchActivities() {
+  async function fetchActivities(){
 
-    try {
+    try{
 
-      const response = await axios.get(
+      const response =
+      await axios.get(
         "http://localhost:5000/api/activity"
       );
 
-
       setLogs(response.data);
 
-    } catch (error) {
+    }
+    catch(error){
 
-      console.log("Activity fetch error", error);
+      console.log(error);
 
-    } finally {
+    }
+    finally{
 
       setLoading(false);
 
@@ -41,93 +49,208 @@ export default function ActivityPage() {
 
 
 
-  return (
+return (
 
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#020617",
-        color: "white",
-        padding: "30px"
-      }}
-    >
+<div
+style={{
+display:"flex",
+minHeight:"100vh",
+background:"#020617",
+color:"white"
+}}
+>
 
-
-      <h1>
-        🕒 Security Activity Center
-      </h1>
+<Sidebar/>
 
 
-
-      <p style={{color:"#94a3b8"}}>
-        Monitor your PixelProtect security events
-      </p>
-
-
-
-      {loading && (
-        <h3>
-          Loading activities...
-        </h3>
-      )}
+<div
+style={{
+flex:1,
+padding:"30px"
+}}
+>
 
 
+<div
+style={{
+background:
+"linear-gradient(135deg,#0ea5e9,#2563eb)",
+padding:"25px",
+borderRadius:"20px",
+marginBottom:"30px"
+}}
+>
 
-      {!loading && logs.length === 0 && (
+<h1 style={{margin:0}}>
+🕒 Security Activity Monitor
+</h1>
 
-        <h3>
-          No activity found
-        </h3>
+<p
+style={{
+color:"#dbeafe"
+}}
+>
+Track every security event happening inside PixelProtect
+</p>
 
-      )}
-
-
-
-      {logs.map((log)=>(
-
-
-        <div
-
-          key={log.id}
-
-          style={{
-            background:"#1e293b",
-            padding:"20px",
-            marginTop:"20px",
-            borderRadius:"15px",
-            borderLeft:"5px solid #38bdf8"
-          }}
-
-        >
+</div>
 
 
-          <h2>
-            🔐 {log.action}
-          </h2>
+
+{loading && (
+
+<h3>
+Loading security events...
+</h3>
+
+)}
 
 
-          <p>
-            {log.details}
-          </p>
+
+{
+!loading && logs.length===0 && (
+
+<div
+style={{
+background:"#1e293b",
+padding:"25px",
+borderRadius:"15px"
+}}
+>
+
+No activity detected
+
+</div>
+
+)
+}
 
 
-          <small style={{color:"#94a3b8"}}>
-
-            {new Date(
-              log.createdAt
-            ).toLocaleString()}
-
-          </small>
 
 
-        </div>
+
+<div
+style={{
+display:"flex",
+flexDirection:"column",
+gap:"20px"
+}}
+>
 
 
-      ))}
+{logs.map((log)=>(
 
 
-    </div>
+<div
+key={log.id}
 
-  );
+style={{
+background:"#1e293b",
+padding:"22px",
+borderRadius:"18px",
+borderLeft:
+"5px solid #38bdf8",
+boxShadow:
+"0 10px 25px rgba(0,0,0,.2)"
+}}
+>
+
+
+<div
+style={{
+display:"flex",
+justifyContent:"space-between",
+alignItems:"center"
+}}
+>
+
+
+<div
+style={{
+display:"flex",
+gap:"15px",
+alignItems:"center"
+}}
+>
+
+
+<div
+style={{
+background:"#0f172a",
+padding:"12px",
+borderRadius:"12px",
+color:"#38bdf8"
+}}
+>
+
+{
+log.action === "FILE_UPLOAD"
+?
+<UploadCloud size={25}/>
+:
+<ShieldCheck size={25}/>
+}
+
+</div>
+
+
+<div>
+
+<h2 style={{margin:0}}>
+{log.action}
+</h2>
+
+<p
+style={{
+color:"#cbd5e1"
+}}
+>
+{log.details}
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<div
+style={{
+color:"#94a3b8",
+display:"flex",
+gap:"6px",
+alignItems:"center"
+}}
+>
+
+<Clock size={15}/>
+
+{
+new Date(
+log.createdAt
+).toLocaleString()
+}
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+))}
+
+
+</div>
+
+
+</div>
+
+</div>
+
+);
 
 }
